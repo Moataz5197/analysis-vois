@@ -1,14 +1,21 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { useSchools } from "../../store";
 
 interface SchoolCards {
   school: string;
-  lessons: number;
   items: string[];
   onItemClick: Dispatch<SetStateAction<string[]>>;
 }
 
-function SchoolCards({ school, lessons, onItemClick, items }: SchoolCards) {
+function SchoolCards({ school, onItemClick, items }: SchoolCards) {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const { schools } = useSchools();
+  let lessons = 0;
+
+  schools
+    .filter((s, i) => s.school == school)
+    .map((e, i) => (lessons += e.lessons));
+
   const handleOnClick = () => {
     const schoolIdx = items.findIndex((item) => item == school);
 
@@ -21,10 +28,10 @@ function SchoolCards({ school, lessons, onItemClick, items }: SchoolCards) {
     }
     setIsActive(!isActive);
   };
-  return (
+  return school == "" ? null : (
     <button
       className={`flex justify-center space-x-3 m-5 ${
-        isActive ? "text-red-500" : "text-red-100"
+        isActive ? "text-red-500" : " opacity-25"
       }`}
       onClick={handleOnClick}
     >
