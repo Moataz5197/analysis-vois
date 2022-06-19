@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { School } from "../../utiils/types";
+import { graphData, School } from "../../utiils/types";
 
 ChartJS.register(
   CategoryScale,
@@ -21,17 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: false,
-    title: {
-      display: false,
-      text: "No",
-    },
-  },
-};
 
 const labels: string[] = [
   "Jan",
@@ -52,26 +41,63 @@ export const data = {
   labels,
   datasets: [
     {
-      label: "Dataset 1",
-      data: [1, 2, 3, 4, 5, 4, 7, 8, 9, 20],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: [1, 2, 3, 4, 15, 6, 7, 8, 9, 10],
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      label: "Default",
+      data: [],
     },
   ],
 };
 
 interface Props {
-  GraphData: School[];
+  GraphData: string[];
+  FilteredData: School[];
 }
 
-const LineChart: React.FunctionComponent<Props> = () => {
-  return <Line data={data} />;
+const LineChart: React.FunctionComponent<Props> = ({
+  GraphData,
+  FilteredData,
+}) => {
+  const timeMap: any = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    May: 4,
+    Jun: 5,
+    Jul: 6,
+    Aug: 7,
+    Sep: 8,
+    Oct: 9,
+    Nov: 10,
+    Dec: 11,
+  };
+  const dataFromSchools: graphData[] = [];
+  GraphData.map((schoolName: string, index: number) => {
+    let label: string = schoolName;
+    let data: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    FilteredData.filter(
+      (element: School, index: number) => element.school == schoolName
+    ).map((element: School, index: number) => {
+      let i = timeMap[element.month];
+      data[timeMap[element.month]] = element.lessons;
+    });
+    if (label !== "") {
+      dataFromSchools.push({
+        label,
+        data,
+      });
+    }
+  });
+
+  return (
+    <Line
+      data={
+        dataFromSchools.length > 0
+          ? { labels, datasets: dataFromSchools }
+          : data
+      }
+      options={{ responsive: true, plugins: { legend: { display: false } } }}
+    />
+  );
 };
 
 export default LineChart;

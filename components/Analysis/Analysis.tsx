@@ -59,7 +59,7 @@ const Analysis: React.FunctionComponent = () => {
         <div className="w-2/3 shadow-lg h-fit">
           <h3>No of Lessons</h3>
           <div>
-            <LineChart GraphData={schools} />
+            <LineChart FilteredData={schools} GraphData={selectedGraphData} />
           </div>
         </div>
         <div className=" w-1/3 shadow-lg overflow-auto">

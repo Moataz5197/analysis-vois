@@ -6,3 +6,8 @@ export type School = {
   school: string;
   lessons: number;
 };
+
+export type graphData = {
+  label: string;
+  data: number[];
+};

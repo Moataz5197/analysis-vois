@@ -6,7 +6,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-interface Schools {
+interface School {
   id: string;
   month: string;
   camp: string;
@@ -16,12 +16,12 @@ interface Schools {
   children: ReactNode;
 }
 
-const useSchoolsController = (schools: Schools[]) => {
+const useSchoolsController = (schools: School[]) => {
   const uniqueCountries: string[] = schools
-    ?.map((school: Schools) => school.country)
+    ?.map((school: School) => school.country)
     ?.filter((value, index, self) => self.indexOf(value) === index);
   const uniqueCamps: string[] = schools
-    ?.map((school: Schools) => school.camp)
+    ?.map((school: School) => school.camp)
     ?.filter((value, index, self) => self.indexOf(value) === index);
 
   uniqueCamps.unshift("");
@@ -35,7 +35,7 @@ const useSchoolsController = (schools: Schools[]) => {
   const filteredSchools = useMemo(
     () =>
       schools.filter(
-        (element: Schools) =>
+        (element: School) =>
           element.country.includes(selectedCountry) &&
           element.camp.includes(selectedCamp) &&
           element.school.includes(selectedSchool)
@@ -76,7 +76,7 @@ export const SchoolsProvider = ({
   schools,
   children,
 }: {
-  schools: Schools[];
+  schools: School[];
   children: ReactNode;
 }) => (
   <SchoolsContext.Provider value={useSchoolsController(schools)}>
