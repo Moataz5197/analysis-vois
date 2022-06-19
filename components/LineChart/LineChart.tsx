@@ -50,11 +50,13 @@ export const data = {
 interface Props {
   GraphData: string[];
   FilteredData: School[];
+  GraphColor: string[];
 }
 
 const LineChart: React.FunctionComponent<Props> = ({
   GraphData,
   FilteredData,
+  GraphColor,
 }) => {
   const timeMap: any = {
     Jan: 0,
@@ -74,6 +76,7 @@ const LineChart: React.FunctionComponent<Props> = ({
   GraphData.map((schoolName: string, index: number) => {
     let label: string = schoolName;
     let data: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let borderColor: string = GraphColor[index];
     FilteredData.filter(
       (element: School, index: number) => element.school == schoolName
     ).map((element: School, index: number) => {
@@ -84,6 +87,9 @@ const LineChart: React.FunctionComponent<Props> = ({
       dataFromSchools.push({
         label,
         data,
+        backgroundColor: "white",
+        borderColor: borderColor,
+        borderWidth: 2,
       });
     }
   });
@@ -95,7 +101,13 @@ const LineChart: React.FunctionComponent<Props> = ({
           ? { labels, datasets: dataFromSchools }
           : data
       }
-      options={{ responsive: true, plugins: { legend: { display: false } } }}
+      options={{
+        responsive: true,
+        plugins: { legend: { display: false } },
+        onClick: (e, elements) => {
+          elements[0] ? console.log(elements[0].index) : "";
+        },
+      }}
     />
   );
 };

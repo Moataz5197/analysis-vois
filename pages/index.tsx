@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import fs from "fs";
 import Analysis from "../components/Analysis";
+import Layout from "../components/Layout";
 
 export function getServerSideProps() {
   const resp = fs.readFileSync(
@@ -17,9 +18,11 @@ export function getServerSideProps() {
 const Home: NextPage = () => {
   return (
     <div>
-      <main className="flex-col justify-center items-center">
-        <Analysis />
-      </main>
+      <Layout>
+        <main className="flex-col justify-center items-center dark:bg-black dark:text-white transition duration-500 mt-16 dark:shadow-slate-400">
+          <Analysis />
+        </main>
+      </Layout>
     </div>
   );
 };

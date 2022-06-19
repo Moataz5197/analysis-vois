@@ -27,10 +27,18 @@ const useSchoolsController = (schools: School[]) => {
   uniqueCamps.unshift("");
   uniqueCountries.unshift("");
 
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedCamp, setSelectedCamp] = useState("");
-  const [selectedSchool, setSelectedSchool] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedCamp, setSelectedCamp] = useState<string>("");
+  const [selectedSchool, setSelectedSchool] = useState<string>("");
   const [selectedGraphData, setSelectedGraphData] = useState<string[]>([""]);
+  const [selectedGraphColor, setSelectedGraphColor] = useState<string[]>([""]);
+  const [theme, setTheme] = useState<string>("dark");
+  const colorTheme: string = theme === "dark" ? "light" : "dark";
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove(colorTheme);
+    root.classList.add(theme);
+  }, [theme, colorTheme]);
   useEffect(() => {}, [selectedCountry, selectedCamp, selectedSchool]);
   const filteredSchools = useMemo(
     () =>
@@ -55,6 +63,10 @@ const useSchoolsController = (schools: School[]) => {
     schools: filteredSchools,
     selectedGraphData,
     setSelectedGraphData,
+    selectedGraphColor,
+    setSelectedGraphColor,
+    setTheme,
+    colorTheme,
   };
 };
 
@@ -70,6 +82,10 @@ const SchoolsContext = createContext<ReturnType<typeof useSchoolsController>>({
   schools: [],
   selectedGraphData: [],
   setSelectedGraphData: () => {},
+  selectedGraphColor: [],
+  setSelectedGraphColor: () => {},
+  setTheme: () => {},
+  colorTheme: "",
 });
 
 export const SchoolsProvider = ({
