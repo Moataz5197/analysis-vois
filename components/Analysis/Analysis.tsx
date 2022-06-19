@@ -17,6 +17,8 @@ const Analysis: React.FunctionComponent = () => {
     setSelectedSchool,
     selectedGraphData,
     setSelectedGraphData,
+    selectedGraphColor,
+    setSelectedGraphColor,
   } = useSchools();
   let countedLessons = 0;
   const SelectedSchools = schools
@@ -55,14 +57,18 @@ const Analysis: React.FunctionComponent = () => {
           />
         </div>
       </div>
-      <div className="container h-96 mx-10 flex space-x-2 rounded-md">
-        <div className="w-2/3 shadow-lg h-fit">
+      <div className="container h-[28rem] mx-10 flex space-x-2 rounded-md">
+        <div className="w-2/3 shadow-lg h-fit  dark:shadow-slate-400">
           <h3>No of Lessons</h3>
           <div>
-            <LineChart FilteredData={schools} GraphData={selectedGraphData} />
+            <LineChart
+              FilteredData={schools}
+              GraphData={selectedGraphData}
+              GraphColor={selectedGraphColor}
+            />
           </div>
         </div>
-        <div className=" w-1/3 shadow-lg overflow-auto">
+        <div className=" w-1/3 shadow-lg overflow-auto  dark:shadow-slate-400">
           <div className="container flex justify-center">
             <div className="flex-col items-center justify-center">
               <div className=" mb-10">
@@ -74,7 +80,9 @@ const Analysis: React.FunctionComponent = () => {
                   key={schoolIdx}
                   school={school}
                   items={selectedGraphData}
+                  colors={selectedGraphColor}
                   onItemClick={setSelectedGraphData}
+                  onItemClickColor={setSelectedGraphColor}
                 />
               ))}
             </div>

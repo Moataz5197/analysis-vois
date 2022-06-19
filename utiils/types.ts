@@ -10,4 +10,7 @@ export type School = {
 export type graphData = {
   label: string;
   data: number[];
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: number;
 };
