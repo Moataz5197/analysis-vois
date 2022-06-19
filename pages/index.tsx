@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useSchools } from "../store";
 import fs from "fs";
 import ListMenu from "../components/ListMenu";
+import SchoolCards from "../components/SchoolCards";
 
 export function getServerSideProps() {
   const resp = fs.readFileSync(
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
     setSelectedCamp,
     selectedSchool,
     setSelectedSchool,
+    selectedGraphData,
+    setSelectedGraphData,
   } = useSchools();
   const SelectedSchools = schools
     .map((element, index) => element.school)
@@ -71,15 +74,18 @@ const Home: NextPage = () => {
               <div className="flex-col items-center justify-center">
                 <div className=" mb-10">
                   <h1 className="text-3xl">80 Lessons</h1>
-                  <h2>in kukama</h2>
+                  <h2>
+                    {selectedCamp == "" ? "Overall" : `in ${selectedCamp}`}
+                  </h2>
                 </div>
-                {schools.map((s, i) => (
-                  <div key={i}>
-                    <h2>
-                      {i + 1}-
-                      {`${s.school}---(${s.country})---(${s.month})----(${s.camp})--(${s.lessons})`}
-                    </h2>
-                  </div>
+                {schools.map((s, schoolIdx: number) => (
+                  <SchoolCards
+                    key={schoolIdx}
+                    school={s.school}
+                    lessons={s.lessons}
+                    items={selectedGraphData}
+                    onItemClick={setSelectedGraphData}
+                  />
                 ))}
               </div>
             </div>

@@ -4,8 +4,8 @@ import {
   createContext,
   useContext,
   ReactNode,
-  useEffect
-} from 'react';
+  useEffect,
+} from "react";
 interface Schools {
   id: string;
   month: string;
@@ -24,12 +24,13 @@ const useSchoolsController = (schools: Schools[]) => {
     ?.map((school: Schools) => school.camp)
     ?.filter((value, index, self) => self.indexOf(value) === index);
 
-  uniqueCamps.unshift('');
-  uniqueCountries.unshift('');
+  uniqueCamps.unshift("");
+  uniqueCountries.unshift("");
 
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedCamp, setSelectedCamp] = useState('');
-  const [selectedSchool, setSelectedSchool] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCamp, setSelectedCamp] = useState("");
+  const [selectedSchool, setSelectedSchool] = useState("");
+  const [selectedGraphData, setSelectedGraphData] = useState<string[]>([""]);
   useEffect(() => {}, [selectedCountry, selectedCamp, selectedSchool]);
   const filteredSchools = useMemo(
     () =>
@@ -51,25 +52,29 @@ const useSchoolsController = (schools: Schools[]) => {
     setSelectedCamp,
     selectedSchool,
     setSelectedSchool,
-    schools: filteredSchools
+    schools: filteredSchools,
+    selectedGraphData,
+    setSelectedGraphData,
   };
 };
 
 const SchoolsContext = createContext<ReturnType<typeof useSchoolsController>>({
   uniqueCountries: [],
   uniqueCamps: [],
-  selectedCountry: '',
+  selectedCountry: "",
   setSelectedCountry: () => {},
-  selectedCamp: '',
+  selectedCamp: "",
   setSelectedCamp: () => {},
-  selectedSchool: '',
+  selectedSchool: "",
   setSelectedSchool: () => {},
-  schools: []
+  schools: [],
+  selectedGraphData: [],
+  setSelectedGraphData: () => {},
 });
 
 export const SchoolsProvider = ({
   schools,
-  children
+  children,
 }: {
   schools: Schools[];
   children: ReactNode;
