@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { useSchools } from "../../store";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface Layout {
   children: ReactNode;
@@ -48,6 +49,7 @@ const Layout: React.FunctionComponent<Layout> = ({ children }) => {
                 </svg>
               )}
             </span>
+            <LanguageSwitcher English={"English"} French={"French"} />
           </div>
         </nav>
       </header>

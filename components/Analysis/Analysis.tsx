@@ -4,7 +4,27 @@ import ListMenu from "../ListMenu";
 import SchoolCards from "../SchoolCards";
 import LineChart from "../LineChart";
 
-const Analysis: React.FunctionComponent = () => {
+interface Props {
+  analysis_main: string;
+  analysis_sub: string;
+  list_1: string;
+  list_2: string;
+  list_3: string;
+  show_all: string;
+  chart_main: string;
+  schools_main: string;
+}
+
+const Analysis: React.FunctionComponent<Props> = ({
+  analysis_main = "Default",
+  analysis_sub = "Default",
+  list_1 = "Default",
+  list_2 = "Default",
+  list_3 = "Default",
+  show_all = "Show all",
+  chart_main = "Default",
+  schools_main = "Default",
+}) => {
   const {
     schools,
     uniqueCountries,
@@ -31,26 +51,29 @@ const Analysis: React.FunctionComponent = () => {
   return (
     <section>
       <div className="container h-64 mx-10 mt-2">
-        <h1 className="text-4xl text-violet-700 mb-10">Analysis chart</h1>
-        <h2 className="text-xl text-violet-700 mb-10">Number of lessons</h2>
+        <h1 className="text-4xl text-violet-700 mb-10">{analysis_main}</h1>
+        <h2 className="text-xl text-violet-700 mb-10">{analysis_sub}</h2>
         <div className="flex justify-around">
           <ListMenu
-            key={0}
-            label={"Select Countries"}
+            key={1}
+            label={list_1}
+            show_all={show_all}
             uniqueSet={uniqueCountries}
             selectedState={selectedCountry}
             setSelectedState={setSelectedCountry}
           />
           <ListMenu
-            key={1}
-            label={"Select Camps"}
+            key={2}
+            label={list_2}
+            show_all={show_all}
             uniqueSet={uniqueCamps}
             selectedState={selectedCamp}
             setSelectedState={setSelectedCamp}
           />
           <ListMenu
-            key={2}
-            label={"Select Schools"}
+            key={3}
+            label={list_3}
+            show_all={show_all}
             uniqueSet={SelectedSchools}
             selectedState={selectedSchool}
             setSelectedState={setSelectedSchool}
@@ -59,7 +82,7 @@ const Analysis: React.FunctionComponent = () => {
       </div>
       <div className="container h-[28rem] mx-10 flex space-x-2 rounded-md">
         <div className="w-2/3 shadow-lg h-fit  dark:shadow-slate-400">
-          <h3>No of Lessons</h3>
+          <h3>{chart_main}</h3>
           <div>
             <LineChart
               FilteredData={schools}
@@ -71,8 +94,10 @@ const Analysis: React.FunctionComponent = () => {
         <div className=" w-1/3 shadow-lg overflow-auto  dark:shadow-slate-400">
           <div className="container flex justify-center">
             <div className="flex-col items-center justify-center">
-              <div className=" mb-10">
-                <h1 className="text-3xl">{countedLessons} Lessons</h1>
+              <div className=" mb-10 mt-5">
+                <h1 className="text-3xl">
+                  {countedLessons} {schools_main}
+                </h1>
                 <h2>{selectedCamp == "" ? "Overall" : `in ${selectedCamp}`}</h2>
               </div>
               {SelectedSchools.map((school: string, schoolIdx: number) => (

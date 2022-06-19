@@ -5,6 +5,7 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 interface ListMenu {
   label?: string;
+  show_all: string;
   uniqueSet: string[];
   selectedState: string;
   setSelectedState: Dispatch<SetStateAction<string>>;
@@ -12,19 +13,20 @@ interface ListMenu {
 
 function ListMenu({
   label = "Select Somethings",
+  show_all = "Show all",
   setSelectedState,
   selectedState = "",
   uniqueSet,
 }: ListMenu) {
   return (
-    <div className="flex space-x-3">
+    <div className="flex space-x-3 mt-4">
       <label className="mt-3">{label}</label>
       <div className="top-16 w-64">
         <Listbox value={selectedState} onChange={setSelectedState}>
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full cursor-default rounded-lg bg-violet-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
               <span className="block truncate h-6">
-                {selectedState == "" ? "Show All" : selectedState}
+                {selectedState == "" ? show_all : selectedState}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <SelectorIcon
@@ -56,7 +58,6 @@ function ListMenu({
                       {
                         <>
                           <span
-                            key={elementIdx}
                             className={`block truncate ${
                               selectedState ? "font-medium" : "font-normal"
                             }`}
@@ -64,12 +65,8 @@ function ListMenu({
                             {element == "" ? "Show All" : element}
                           </span>
                           {selectedState == element ? (
-                            <span
-                              key={elementIdx}
-                              className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
-                            >
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                               <CheckIcon
-                                key={elementIdx}
                                 className="h-5 w-5"
                                 aria-hidden="true"
                               />
