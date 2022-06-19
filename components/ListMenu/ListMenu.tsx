@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Fragment } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import React, { Dispatch, SetStateAction } from "react";
+import { Fragment } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 interface ListMenu {
   label?: string;
@@ -11,10 +11,10 @@ interface ListMenu {
 }
 
 function ListMenu({
-  label = 'Select Somethings',
+  label = "Select Somethings",
   setSelectedState,
-  selectedState = '',
-  uniqueSet
+  selectedState = "",
+  uniqueSet,
 }: ListMenu) {
   return (
     <div className="flex space-x-3">
@@ -24,7 +24,7 @@ function ListMenu({
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full cursor-default rounded-lg bg-violet-700 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
               <span className="block truncate h-6">
-                {selectedState == '' ? 'Show All' : selectedState}
+                {selectedState == "" ? "Show All" : selectedState}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <SelectorIcon
@@ -47,8 +47,8 @@ function ListMenu({
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                           active
-                            ? 'bg-amber-100 text-amber-900'
-                            : 'text-gray-900'
+                            ? "bg-amber-100 text-amber-900"
+                            : "text-gray-900"
                         }`
                       }
                       value={element}
@@ -56,15 +56,20 @@ function ListMenu({
                       {
                         <>
                           <span
+                            key={elementIdx}
                             className={`block truncate ${
-                              selectedState ? 'font-medium' : 'font-normal'
+                              selectedState ? "font-medium" : "font-normal"
                             }`}
                           >
-                            {element == '' ? 'Show All' : element}
+                            {element == "" ? "Show All" : element}
                           </span>
                           {selectedState == element ? (
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                            <span
+                              key={elementIdx}
+                              className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
+                            >
                               <CheckIcon
+                                key={elementIdx}
                                 className="h-5 w-5"
                                 aria-hidden="true"
                               />
@@ -73,7 +78,7 @@ function ListMenu({
                         </>
                       }
                     </Listbox.Option>
-                    {elementIdx == 0 ? <hr key={elementIdx} /> : ''}
+                    {elementIdx == 0 ? <hr key={elementIdx} /> : ""}
                   </>
                 ))}
               </Listbox.Options>
