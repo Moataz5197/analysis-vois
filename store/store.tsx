@@ -24,8 +24,8 @@ const useSchoolsController = (schools: School[]) => {
     ?.map((school: School) => school.camp)
     ?.filter((value, index, self) => self.indexOf(value) === index);
 
-  uniqueCamps.unshift("");
-  uniqueCountries.unshift("");
+  uniqueCamps?.unshift("");
+  uniqueCountries?.unshift("");
 
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedCamp, setSelectedCamp] = useState<string>("");
@@ -42,7 +42,7 @@ const useSchoolsController = (schools: School[]) => {
   useEffect(() => {}, [selectedCountry, selectedCamp, selectedSchool]);
   const filteredSchools = useMemo(
     () =>
-      schools.filter(
+      schools?.filter(
         (element: School) =>
           element.country.includes(selectedCountry) &&
           element.camp.includes(selectedCamp) &&
