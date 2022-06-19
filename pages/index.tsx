@@ -3,6 +3,7 @@ import { useSchools } from "../store";
 import fs from "fs";
 import ListMenu from "../components/ListMenu";
 import SchoolCards from "../components/SchoolCards";
+import LineChart from "../components/LineChart";
 
 export function getServerSideProps() {
   const resp = fs.readFileSync(
@@ -67,7 +68,9 @@ const Home: NextPage = () => {
         <div className="container h-96  mx-10 flex space-x-2 rounded-md">
           <div className="w-2/3 shadow-lg">
             <h3>No of Lessons</h3>
-            {/* <LineChart chartData={{ year: "1999" }} /> */}
+            <div>
+              <LineChart GraphData={"Hi"} />
+            </div>
           </div>
           <div className=" w-1/3 shadow-lg overflow-auto">
             <div className="container flex justify-center">
